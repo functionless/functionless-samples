@@ -245,7 +245,7 @@
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @functionless/language-service @functionless/projen @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit json-schema npm-check-updates prettier ts-jest ts-node ts-patch typescript @aws-cdk/aws-appsync-alpha aws-cdk-lib constructs functionless"
+          "exec": "yarn upgrade @functionless/language-service @functionless/projen @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk esbuild eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit json-schema npm-check-updates ts-jest ts-node ts-patch typescript @aws-cdk/aws-appsync-alpha aws-cdk-lib constructs functionless"
         },
         {
           "exec": "npx projen"

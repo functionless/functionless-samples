@@ -5,6 +5,10 @@ const project = new LernaProject({
   defaultReleaseBranch: "main",
   devDeps: ["lerna-projen", '@functionless/projen'],
   name: "functionless-samples",
+  eslintOptions: {
+    lintProjenRc: true,
+  },
+  prettier: {}
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // packageName: undefined,  /* The "name" in package.json. */
@@ -22,11 +26,6 @@ const functionless1 = new FunctionlessProject({
       skipLibCheck: true
     }
   },
-  eslintOptions: {
-    lintProjenRc: true,
-  },
-  prettier: {}
-
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // packageName: undefined,  /* The "name" in package.json. */

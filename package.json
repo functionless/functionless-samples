@@ -21,6 +21,7 @@
     "lerna": "^5.1.8",
     "lerna-projen": "^0.0.184",
     "npm-check-updates": "^12",
+    "prettier": "^2.7.1",
     "projen": "^0.58.28",
     "standard-version": "^9"
   },
