@@ -127,6 +127,9 @@
         },
         {
           "exec": "lerna run package --stream"
+        },
+        {
+          "exec": "lerna-projen copy-dist packages/sample1"
         }
       ]
     },
