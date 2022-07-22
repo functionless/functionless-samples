@@ -1,7 +1,9 @@
 import { TurborepoProject } from 'projen-turborepo';
-const project = new TurborepoProject({
+import {FunctionlessProject} from'@functionless/projen';
+
+const turbo = new TurborepoProject({
   defaultReleaseBranch: 'main',
-  devDeps: ['projen-turborepo'],
+  devDeps: ['projen-turborepo', '@functionless/projen'],
   name: 'functionless-samples',
   projenrcTs: true,
 
@@ -9,4 +11,13 @@ const project = new TurborepoProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // packageName: undefined,  /* The "name" in package.json. */
 });
-project.synth();
+
+new FunctionlessProject({
+  parent: turbo,
+  defaultReleaseBranch: 'master',
+  name: 'sample1',
+  outdir: 'packages/sample1',
+  cdkVersion: '2.33.0'
+})
+
+turbo.synth();
