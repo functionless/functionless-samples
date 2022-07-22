@@ -130,6 +130,9 @@
         },
         {
           "exec": "lerna-projen copy-dist packages/sample1"
+        },
+        {
+          "exec": "lerna-projen copy-dist packages/mergeDeploy"
         }
       ]
     },
