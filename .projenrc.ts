@@ -10,7 +10,7 @@ const turbo = new TurborepoProject({
     pipeline: {
       "deploy" : {},
       "synth": {},
-
+      "prepare": {}
     }
   }
 
@@ -18,6 +18,9 @@ const turbo = new TurborepoProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // packageName: undefined,  /* The "name" in package.json. */
 });
+
+// prepare is not run when install sub-package, run prepare to run the functionless requirement `ts-patch install -s`
+turbo.setScript("preinstall", "turbo run prepare")
 
 new FunctionlessProject({
   parent: turbo,

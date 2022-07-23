@@ -21,7 +21,8 @@
     "unbump": "npx projen unbump",
     "upgrade": "npx projen upgrade",
     "watch": "npx projen watch",
-    "projen": "npx projen"
+    "projen": "npx projen",
+    "preinstall": "turbo run prepare"
   },
   "devDependencies": {
     "@functionless/projen": "^0.0.8",
