@@ -58,7 +58,7 @@
     "packages/sample1"
   ],
   "lint-staged": {
-    "*.{tsx,jsx,ts,js,json,md,css}": [
+    "*.{tsx,jsx,ts,js,json,md}": [
       "turbo run eslint -- --"
     ]
   },

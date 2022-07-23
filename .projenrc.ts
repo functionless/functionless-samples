@@ -44,7 +44,7 @@ new FunctionlessProject({
 const packageJson = turbo.tryFindObjectFile("package.json");
 
 packageJson?.addOverride("lint-staged", {
-  "*.{tsx,jsx,ts,js,json,md,css}": ["turbo run eslint -- --"],
+  "*.{tsx,jsx,ts,js,json,md}": ["turbo run eslint -- --"],
 });
 
 new Husky(turbo, {
