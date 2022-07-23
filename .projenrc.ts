@@ -20,7 +20,7 @@ const turbo = new TurborepoProject({
 });
 
 // prepare is not run when install sub-package, run prepare to run the functionless requirement `ts-patch install -s`
-turbo.setScript("preinstall", "turbo run prepare")
+turbo.setScript("postinstall", "turbo run prepare")
 
 new FunctionlessProject({
   parent: turbo,
