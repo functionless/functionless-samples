@@ -103,7 +103,7 @@
       "description": "Runs eslint against the codebase",
       "steps": [
         {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools projenrc .projenrc.ts"
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern test build-tools projenrc .projenrc.ts"
         }
       ]
     },
@@ -122,6 +122,15 @@
     "pre-compile": {
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
+    },
+    "prepare": {
+      "name": "prepare",
+      "description": "installs husky",
+      "steps": [
+        {
+          "exec": "husky install"
+        }
+      ]
     },
     "release": {
       "name": "release",
