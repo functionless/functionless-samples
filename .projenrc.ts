@@ -61,10 +61,10 @@ eslintJson?.addOverride("parserOptions.project", [
 
 new FunctionlessProject({
   parent: turbo,
-  defaultReleaseBranch: 'main',
-  name: 'sagaFunction',
-  outdir: 'packages/sagaFunction',
-  cdkVersion: '2.33.0'
-})
+  defaultReleaseBranch: "main",
+  name: "sagaFunction",
+  outdir: "packages/sagaFunction",
+  cdkVersion: "2.33.0",
+});
 
 turbo.synth();
