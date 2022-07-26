@@ -1,12 +1,14 @@
 import { Construct } from 'constructs';
 import { $AWS, StepFunction, Function, ITable } from 'functionless';
-import { BookingEntry, Reservation } from './types';
+import { BookingEntry, Reservation, ReservationRequest } from './types';
 
 interface SagaFunctionProps {
   bookingsTable: ITable<BookingEntry, 'pk', 'sk'>;
 }
 
 export class SagaFunction extends Construct {
+  readonly func: StepFunction<ReservationRequest, string>;
+
   constructor(scope: Construct, id: string, props: SagaFunctionProps) {
     super(scope, id);
 
@@ -20,54 +22,55 @@ export class SagaFunction extends Construct {
 
     // 1) Flights
     // // this.createLambda(this, 'reserveFlightLambdaHandler', 'flights/reserveFlight.handler', bookingsTable);
-    const reserveFlightLambda = new Function<Reservation, ReservationResult>(
-      this,
-      'reserveFlightLambdaHandler',
-      async (event) => {
-        console.log('request:', JSON.stringify(event, undefined, 2));
+    const reserveFlightLambda = new Function<
+    ReservationRequest,
+    ReservationResult
+    >(this, 'reserveFlightLambdaHandler', async (event) => {
+      console.log('request:', JSON.stringify(event, undefined, 2));
 
-        let flightBookingID = hashCode(
-          '' + event.trip_id + event.depart + event.arrive,
-        );
+      let flightBookingID = hashCode(
+        '' +
+          event.reservation.trip_id +
+          event.reservation.depart +
+          event.reservation.arrive,
+      );
 
-        // If we passed the parameter to fail this step
-        if (event.run_type === 'failFlightsReservation') {
-          throw new Error('Failed to book the flights');
-        }
+      // If we passed the parameter to fail this step
+      if (event.run_type === 'failFlightsReservation') {
+        throw new Error('Failed to book the flights');
+      }
 
-        // Call DynamoDB to add the item to the table
-        let result = await $AWS.DynamoDB.PutItem({
-          Table: props.bookingsTable,
-          Item: {
-            pk: { S: event.trip_id },
-            sk: { S: 'FLIGHT#' + flightBookingID },
-            type: { S: 'Flight' },
-            trip_id: { S: event.trip_id },
-            id: { S: flightBookingID },
-            depart: { S: event.depart },
-            depart_at: { S: event.depart_at },
-            arrive: { S: event.arrive },
-            arrive_at: { S: event.arrive_at },
-            transaction_status: { S: 'pending' },
-          },
-        }).catch((error: any) => {
-          throw new Error(error);
-        });
+      // Call DynamoDB to add the item to the table
+      let result = await $AWS.DynamoDB.PutItem({
+        Table: props.bookingsTable,
+        Item: {
+          pk: { S: event.reservation.trip_id },
+          sk: { S: 'FLIGHT#' + flightBookingID },
+          type: { S: 'Flight' },
+          trip_id: { S: event.reservation.trip_id },
+          id: { S: flightBookingID },
+          depart: { S: event.reservation.depart },
+          depart_at: { S: event.reservation.depart_at },
+          arrive: { S: event.reservation.arrive },
+          arrive_at: { S: event.reservation.arrive_at },
+          transaction_status: { S: 'pending' },
+        },
+      }).catch((error: any) => {
+        throw new Error(error);
+      });
 
-        console.log('inserted flight booking:');
-        console.log(result);
+      console.log('inserted flight booking:');
+      console.log(result);
 
-        // return status of ok
-        return {
-          status: 'ok',
-          booking_id: flightBookingID,
-        };
-      },
-    );
+      // return status of ok
+      return {
+        status: 'ok',
+        booking_id: flightBookingID,
+      };
+    });
 
-    interface ConfirmFlightRequest {
+    interface ConfirmFlightRequest extends ReservationRequest {
       ReserveFlightResult: ReservationResult;
-      reservation: Reservation;
     }
 
     // this.createLambda(this,"confirmFlightLambdaHandler","flights/confirmFlight.handler",bookingsTable);
@@ -78,7 +81,7 @@ export class SagaFunction extends Construct {
         console.log('request:', JSON.stringify(event, undefined, 2));
 
         // If we passed the parameter to fail this step
-        if (event.reservation.run_type === 'failFlightsConfirmation') {
+        if (event.run_type === 'failFlightsConfirmation') {
           throw new Error('Failed to book the flights');
         }
 
@@ -110,8 +113,7 @@ export class SagaFunction extends Construct {
       },
     );
 
-    interface CancelFlightRequest {
-      reservation: Reservation;
+    interface CancelFlightRequest extends ReservationRequest {
       ReserveFlightResult?: ReservationResult;
     }
 
@@ -152,7 +154,7 @@ export class SagaFunction extends Construct {
 
     // 2) Hotel
 
-    interface ReserveHotelRequest extends Reservation {}
+    interface ReserveHotelRequest extends ReservationRequest {}
 
     // this.createLambda(this,"reserveHotelLambdaHandler","hotel/reserveHotel.handler",bookingsTable);
     const reserveHotelLambda = new Function<
@@ -162,7 +164,10 @@ export class SagaFunction extends Construct {
       console.log('request:', JSON.stringify(event, undefined, 2));
 
       let hotelBookingID = hashCode(
-        '' + event.trip_id + event.hotel + event.check_in,
+        '' +
+          event.reservation.trip_id +
+          event.reservation.hotel +
+          event.reservation.check_in,
       );
 
       // If we passed the parameter to fail this step
@@ -174,14 +179,14 @@ export class SagaFunction extends Construct {
       let result = await $AWS.DynamoDB.PutItem({
         Table: props.bookingsTable,
         Item: {
-          pk: { S: event.trip_id },
+          pk: { S: event.reservation.trip_id },
           sk: { S: 'HOTEL#' + hotelBookingID },
-          trip_id: { S: event.trip_id },
+          trip_id: { S: event.reservation.trip_id },
           type: { S: 'Hotel' },
           id: { S: hotelBookingID },
-          hotel: { S: event.hotel },
-          check_in: { S: event.check_in },
-          check_out: { S: event.check_out },
+          hotel: { S: event.reservation.hotel },
+          check_in: { S: event.reservation.check_in },
+          check_out: { S: event.reservation.check_out },
           transaction_status: { S: 'pending' },
         },
       }).catch((error: any) => {
@@ -197,8 +202,7 @@ export class SagaFunction extends Construct {
       };
     });
 
-    interface ConfirmHotelRequest {
-      reservation: Reservation;
+    interface ConfirmHotelRequest extends ReservationRequest {
       ReserveHotelResult: ReservationResult;
     }
 
@@ -210,7 +214,7 @@ export class SagaFunction extends Construct {
         console.log('request:', JSON.stringify(event, undefined, 2));
 
         // If we passed the parameter to fail this step
-        if (event.reservation.run_type === 'failHotelConfirmation') {
+        if (event.run_type === 'failHotelConfirmation') {
           throw new Error('Failed to confirm the hotel booking');
         }
 
@@ -242,8 +246,7 @@ export class SagaFunction extends Construct {
       },
     );
 
-    interface CancelHotelRequest {
-      reservation: Reservation;
+    interface CancelHotelRequest extends ReservationRequest {
       ReserveHotelResult?: ReservationResult;
     }
 
@@ -287,8 +290,7 @@ export class SagaFunction extends Construct {
     interface TakePaymentResult extends Result {
       payment_id: string;
     }
-    interface TakePayloadRequest {
-      reservation: Reservation;
+    interface TakePayloadRequest extends ReservationRequest {
       ReserveFlightResult: ReservationResult;
       ReserveHotelResult: ReservationResult;
     }
@@ -308,7 +310,7 @@ export class SagaFunction extends Construct {
       );
 
       // If we passed the parameter to fail this step
-      if (event.reservation.run_type === 'failPayment') {
+      if (event.run_type === 'failPayment') {
         throw new Error('Failed to book the flights');
       }
 
@@ -381,72 +383,77 @@ export class SagaFunction extends Construct {
       },
     );
 
-    new StepFunction(this, 'sagaFunction', async (input: Reservation) => {
-      let hotelReservationResult;
-      try {
-        hotelReservationResult = await reserveHotelLambda(input);
-        let flightReservationResult;
+    this.func = new StepFunction(
+      this,
+      'sagaFunction',
+      async (input: ReservationRequest) => {
+        let hotelReservationResult;
         try {
-          flightReservationResult = await reserveFlightLambda(input);
-          let takePayloadResult;
+          hotelReservationResult = await reserveHotelLambda(input);
+          let flightReservationResult;
           try {
-            takePayloadResult = await takePaymentLambda({
-              reservation: input,
-              ReserveFlightResult: flightReservationResult,
-              ReserveHotelResult: hotelReservationResult,
-            });
+            flightReservationResult = await reserveFlightLambda(input);
+            let takePayloadResult;
+            try {
+              takePayloadResult = await takePaymentLambda({
+                reservation: input.reservation,
+                run_type: input.run_type,
+                ReserveFlightResult: flightReservationResult,
+                ReserveHotelResult: hotelReservationResult,
+              });
 
-            await confirmHotelLambda({
-              ReserveHotelResult: hotelReservationResult,
-              reservation: input,
-            });
-            await confirmFlightLambda({
-              reservation: input,
-              ReserveFlightResult: flightReservationResult,
-            });
+              await confirmHotelLambda({
+                ReserveHotelResult: hotelReservationResult,
+                reservation: input.reservation,
+                run_type: input.run_type,
+              });
+              await confirmFlightLambda({
+                reservation: input.reservation,
+                run_type: input.run_type,
+                ReserveFlightResult: flightReservationResult,
+              });
+            } catch {
+              // NEED: Retry(3)
+              await refundPaymentLambda(
+                takePayloadResult
+                  ? {
+                    reservation: input.reservation,
+                    TakePaymentResult: takePayloadResult,
+                  }
+                  : input,
+              );
+              throw Error('Throw to cancel flight.');
+            }
           } catch {
             // NEED: Retry(3)
-            await refundPaymentLambda(
-              takePayloadResult
+            await cancelFlightLambda(
+              flightReservationResult
                 ? {
-                  reservation: input,
-                  TakePaymentResult: takePayloadResult,
+                  reservation: input.reservation,
+                  ReserveFlightResult: flightReservationResult,
+                  run_type: input.run_type,
                 }
-                : {
-                  reservation: input,
-                },
+                : input,
             );
-            throw Error('Throw to cancel flight.');
+            throw Error('Throw to cancel hotel.');
           }
         } catch {
           // NEED: Retry(3)
-          await cancelFlightLambda(
-            flightReservationResult
+          await cancelHotelLambda(
+            hotelReservationResult
               ? {
-                reservation: input,
-                ReserveFlightResult: flightReservationResult,
+                reservation: input.reservation,
+                ReserveHotelResult: hotelReservationResult,
+                run_type: input.run_type,
               }
-              : {
-                reservation: input,
-              },
+              : input,
           );
-          throw Error('Throw to cancel hotel.');
+          throw Error("Sorry, We Couldn't make the booking");
         }
-      } catch {
-        // NEED: Retry(3)
-        await cancelHotelLambda(
-          hotelReservationResult
-            ? {
-              reservation: input,
-              ReserveHotelResult: hotelReservationResult,
-            }
-            : { reservation: input },
-        );
-        throw Error("Sorry, We Couldn't make the booking");
-      }
 
-      return 'We have made your booking!';
-    });
+        return 'We have made your booking!';
+      },
+    );
 
     function hashCode(s: string) {
       let h: any;
