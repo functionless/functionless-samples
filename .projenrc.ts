@@ -67,4 +67,12 @@ new FunctionlessProject({
   cdkVersion: "2.33.0",
 });
 
+new FunctionlessProject({
+  parent: turbo,
+  defaultReleaseBranch: "main",
+  name: "eventBusSaga",
+  outdir: "packages/eventBusSaga",
+  cdkVersion: "2.33.0",
+});
+
 turbo.synth();
