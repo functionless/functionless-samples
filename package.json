@@ -55,6 +55,8 @@
   "types": "lib/index.d.ts",
   "private": true,
   "workspaces": [
+    "packages/eventBusSaga",
+    "packages/sagaFunction",
     "packages/sample1"
   ],
   "lint-staged": {

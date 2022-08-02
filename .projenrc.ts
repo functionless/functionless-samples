@@ -59,4 +59,20 @@ eslintJson?.addOverride("parserOptions.project", [
   "./packages/sample1/tsconfig.dev.json",
 ]);
 
+new FunctionlessProject({
+  parent: turbo,
+  defaultReleaseBranch: "main",
+  name: "sagaFunction",
+  outdir: "packages/sagaFunction",
+  cdkVersion: "2.33.0",
+});
+
+new FunctionlessProject({
+  parent: turbo,
+  defaultReleaseBranch: "main",
+  name: "eventBusSaga",
+  outdir: "packages/eventBusSaga",
+  cdkVersion: "2.33.0",
+});
+
 turbo.synth();
