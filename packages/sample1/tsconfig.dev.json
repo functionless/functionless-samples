@@ -23,11 +23,7 @@
     "strictPropertyInitialization": true,
     "stripInternal": true,
     "target": "ES2019",
-    "plugins": [
-      {
-        "transform": "functionless/lib/compile"
-      }
-    ]
+    "plugins": []
   },
   "include": [
     ".projenrc.js",

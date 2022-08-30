@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node -P tsconfig.json --prefer-ts-exts src/app.ts",
+  "app": "node -r '@swc/register' src/app.ts",
   "output": "cdk.out",
   "build": "npx projen bundle",
   "watch": {

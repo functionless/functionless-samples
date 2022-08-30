@@ -26,7 +26,7 @@
     "postinstall": "turbo run prepare"
   },
   "devDependencies": {
-    "@functionless/projen": "^0.0.8",
+    "@functionless/projen": "^0.2.0",
     "@mountainpass/cool-bits-for-projen": "^0.2.4",
     "@types/node": "^14",
     "@typescript-eslint/eslint-plugin": "^5",
@@ -34,7 +34,7 @@
     "eslint": "^8",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-node": "^0.3.6",
-    "eslint-import-resolver-typescript": "^3.3.0",
+    "eslint-import-resolver-typescript": "^3.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.1",
@@ -42,12 +42,12 @@
     "lint-staged": "^13.0.3",
     "npm-check-updates": "^15",
     "prettier": "^2.7.1",
-    "projen": "^0.59.6",
+    "projen": "^0.61.34",
     "projen-turborepo": "^0.0.63",
     "standard-version": "^9",
     "ts-node": "^10.9.1",
-    "turbo": "^1.3.4",
-    "typescript": "^4.7.4"
+    "turbo": "^1.4.3",
+    "typescript": "^4.8.2"
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
