@@ -50,7 +50,7 @@
     "@aws-cdk/aws-appsync-alpha": "^2.33.0-alpha.0",
     "aws-cdk-lib": "^2.39.1",
     "constructs": "^10.0.5",
-    "functionless": "^0.22.1",
+    "functionless": "^0.22.3",
     "typesafe-dynamodb": "^0.2.2"
   },
   "license": "Apache-2.0",
