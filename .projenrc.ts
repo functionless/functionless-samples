@@ -25,6 +25,7 @@ const turbo = new TurborepoProject({
     lintProjenRc: true,
     prettier: true,
   },
+  gitignore: [".swc"],
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // packageName: undefined,  /* The "name" in package.json. */
@@ -38,7 +39,7 @@ new FunctionlessProject({
   defaultReleaseBranch: "main",
   name: "sample1",
   outdir: "packages/sample1",
-  cdkVersion: "2.33.0",
+  cdkVersion: "2.39.1",
 });
 
 const packageJson = turbo.tryFindObjectFile("package.json");
@@ -64,7 +65,7 @@ new FunctionlessProject({
   defaultReleaseBranch: "main",
   name: "sagaFunction",
   outdir: "packages/sagaFunction",
-  cdkVersion: "2.33.0",
+  cdkVersion: "2.39.1",
 });
 
 turbo.synth();

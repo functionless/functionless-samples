@@ -19,6 +19,7 @@
 /.projen/deps.json linguist-generated
 /.projen/files.json linguist-generated
 /.projen/tasks.json linguist-generated
+/.swcrc linguist-generated
 /cdk.json linguist-generated
 /dist/fake.json linguist-generated
 /LICENSE linguist-generated

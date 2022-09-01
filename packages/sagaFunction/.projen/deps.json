@@ -5,6 +5,10 @@
       "type": "build"
     },
     {
+      "name": "@swc/jest",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
       "type": "build"
     },
@@ -25,7 +29,7 @@
     },
     {
       "name": "aws-cdk",
-      "version": "^2.33.0",
+      "version": "^2.39.1",
       "type": "build"
     },
     {
@@ -80,10 +84,6 @@
       "type": "build"
     },
     {
-      "name": "ts-patch",
-      "type": "build"
-    },
-    {
       "name": "typescript",
       "type": "build"
     },
@@ -93,7 +93,7 @@
     },
     {
       "name": "aws-cdk-lib",
-      "version": "^2.33.0",
+      "version": "^2.39.1",
       "type": "runtime"
     },
     {
