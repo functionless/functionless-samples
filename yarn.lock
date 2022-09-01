@@ -1435,10 +1435,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@functionless/ast-reflection@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@functionless/ast-reflection/-/ast-reflection-0.2.1.tgz#30c75f9e25d774edce2d8e0e29279a9c3f159539"
-  integrity sha512-8TDOskdBXRwEqn+4G7WgaACqXioIj+ticx1vaP0Hjp+oTq70h3Jxb32jgSji0SPYQRrtQOPyPY4FkpS3zMvRUw==
+"@functionless/ast-reflection@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@functionless/ast-reflection/-/ast-reflection-0.2.2.tgz#976ec73af75028cb6216d70fa5266db368b0590a"
+  integrity sha512-YtvaEnorKparTOOIXmEbUXEfN4vOGl9jyXY7tvCDAgDpGMdJI2xAs108nHjNa6gabL9Xvojm6I1SuPC+EAsBvg==
 
 "@functionless/language-service@^0.0.4":
   version "0.0.4"
@@ -4323,12 +4323,12 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha512-dsKNQNdj6xA3T+QlADDA7mOSlX0qiMINjn0cgr+eGHGsbSHzTabcIogz2+p/iqP1Xs6EP/sS2SbqH+brGTbq0g==
 
-functionless@^0.22.3:
-  version "0.22.3"
-  resolved "https://registry.yarnpkg.com/functionless/-/functionless-0.22.3.tgz#0fc3f597996f2ef05b474828f4a1ce103655f647"
-  integrity sha512-+/F1hGdpHt4Y6+vATQPIXG/7+xyGKkdlNCSozB4JCK9DEsV+g3Xbvdbzay/5t3H+/DxvLXvHwETQhtKebkuUYg==
+functionless@^0.22.6:
+  version "0.22.6"
+  resolved "https://registry.yarnpkg.com/functionless/-/functionless-0.22.6.tgz#f867c46133b437673767e7a34b06a57191b2397a"
+  integrity sha512-Bsz2Dm5BslLP8NXFoBXsTsTjsthCeQDc49Cv6QsnnuIW6isqm+79a8d0kvzDNRk4VwvdgcdRLOyIFfm4DsaqFQ==
   dependencies:
-    "@functionless/ast-reflection" "^0.2.1"
+    "@functionless/ast-reflection" "^0.2.2"
     "@functionless/nodejs-closure-serializer" "^0.1.2"
     "@swc/cli" "^0.1.57"
     "@swc/core" "1.2.245"
