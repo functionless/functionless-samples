@@ -1,6 +1,7 @@
 import { FunctionlessProject } from "@functionless/projen";
 import { Husky } from "@mountainpass/cool-bits-for-projen";
 import { TurborepoProject } from "projen-turborepo";
+import { GithubCredentials } from "projen/lib/github";
 
 const turbo = new TurborepoProject({
   defaultReleaseBranch: "main",
@@ -24,6 +25,11 @@ const turbo = new TurborepoProject({
     dirs: [],
     lintProjenRc: true,
     prettier: true,
+  },
+  depsUpgradeOptions: {
+    workflowOptions: {
+      projenCredentials: GithubCredentials.fromApp(),
+    },
   },
   gitignore: [".swc"],
   // deps: [],                /* Runtime dependencies of this module. */
