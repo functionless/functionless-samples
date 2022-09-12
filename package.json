@@ -58,6 +58,10 @@
     "packages/sagaFunction",
     "packages/sample1"
   ],
+  "resolutions": {
+    "@types/responselike": "1.0.0",
+    "got": "12.3.1"
+  },
   "lint-staged": {
     "*.{tsx,jsx,ts,js,json,md}": [
       "turbo run eslint -- --"
