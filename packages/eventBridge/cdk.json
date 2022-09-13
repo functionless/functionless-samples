@@ -1,5 +1,5 @@
 {
-  "app": "node -r '@swc/register' src/app.ts",
+  "app": "node -r 'functionless/register' src/app.ts",
   "output": "cdk.out",
   "build": "npx projen bundle",
   "watch": {

@@ -1,58 +1,40 @@
-import * as appsync from '@aws-cdk/aws-appsync-alpha';
-import { App, aws_dynamodb, Stack } from 'aws-cdk-lib';
-import { AppsyncResolver, Table } from 'functionless';
+import { App, Stack } from 'aws-cdk-lib';
+import { RestApi } from 'aws-cdk-lib/aws-apigateway';
+import { AwsMethod, EventBus, Function } from 'functionless';
 
 const app = new App();
 const stack = new Stack(app, 'stack');
 
-interface Person {
-  id: string;
-  name: string;
-}
-
-const table = new Table<Person, 'id'>(stack, 'Table', {
-  partitionKey: {
-    name: 'id',
-    type: aws_dynamodb.AttributeType.STRING,
-  },
+const receipt = new Function(stack, 'receipt', async () => {
+  console.log('receipt sent!');
+});
+const shipping = new Function(stack, 'shipping', async () => {
+  console.log('item shipped');
 });
 
-const api = new appsync.GraphqlApi(stack, 'api', {
-  name: 'api',
-});
+const bus = new EventBus(stack, 'Ordered');
 
-const Person = api.addType(
-  new appsync.ObjectType('Person', {
-    definition: {
-      name: appsync.GraphqlType.string(),
-    },
-  }),
+const whenOrder = bus.when(
+  'rule1',
+  (event) => event.source === 'myevent' && event['detail-type'] === 'Order',
 );
 
-api.addQuery(
-  'getPerson',
-  new appsync.Field({
-    returnType: Person.attribute(),
-    args: {
-      id: appsync.GraphqlType.string(),
-    },
-  }),
-);
+whenOrder.pipe(receipt);
+whenOrder.pipe(shipping);
 
-new AppsyncResolver<{ id: string }, Person>(
-  api,
-  'getPerson',
-  {
-    fieldName: 'getPerson',
-    typeName: 'Query',
-  },
-  ($context) => {
-    return table.appsync.getItem({
-      key: {
-        id: {
-          S: $context.arguments.id,
-        },
+const api = new RestApi(stack, 'api');
+const order = api.root.addResource('order');
+
+const method = new AwsMethod(
+  { httpMethod: 'POST', resource: order },
+  async () =>
+    bus.putEvents({
+      'detail-type': 'Order',
+      'source': 'myEvent',
+      'detail': {
+        id: 123,
+        name: 'My order',
+        items: [{ id: '1', name: 'my Item', price: 10 }],
       },
-    });
-  },
+    }),
 );
