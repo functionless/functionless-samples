@@ -31,6 +31,7 @@ const turbo = new TurborepoProject({
       projenCredentials: GithubCredentials.fromApp(),
     },
   },
+  projenCredentials: GithubCredentials.fromApp(),
   gitignore: [".swc"],
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
