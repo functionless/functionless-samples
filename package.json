@@ -55,6 +55,7 @@
   "types": "lib/index.d.ts",
   "private": true,
   "workspaces": [
+    "packages/cron",
     "packages/sagaFunction",
     "packages/sample1"
   ],
