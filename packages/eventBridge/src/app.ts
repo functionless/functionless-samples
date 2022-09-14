@@ -25,7 +25,7 @@ whenOrder.pipe(shipping);
 const api = new RestApi(stack, 'api');
 const order = api.root.addResource('order');
 
-const method = new AwsMethod(
+new AwsMethod(
   { httpMethod: 'POST', resource: order },
   async () =>
     bus.putEvents({
@@ -37,4 +37,7 @@ const method = new AwsMethod(
         items: [{ id: '1', name: 'my Item', price: 10 }],
       },
     }),
+  () => {
+    return 'done';
+  },
 );

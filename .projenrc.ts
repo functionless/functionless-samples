@@ -80,6 +80,11 @@ new FunctionlessProject({
   name: "eventBridge",
   outdir: "packages/eventBridge",
   cdkVersion: "2.39.1",
+  tsconfig: {
+    compilerOptions: {
+      skipLibCheck: false,
+    },
+  },
 });
 
 turbo.synth();

@@ -25,6 +25,7 @@
     "strictPropertyInitialization": true,
     "stripInternal": true,
     "target": "ES2019",
+    "skipLibCheck": false,
     "plugins": [
       {
         "name": "@functionless/language-service"

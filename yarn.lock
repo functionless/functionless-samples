@@ -1457,11 +1457,6 @@
   resolved "https://registry.yarnpkg.com/@functionless/ast-reflection/-/ast-reflection-0.2.3.tgz#aac5039305bb73041fa5e4c4b8266e96106a30d3"
   integrity sha512-lL4JkdCsTw2lzH05SpLnrkEEm+Gtx7kdIdCnT87/HiXzSHPpG8yrdpDP32YYHN2I5M81MZEd754mdJk7jDZYLg==
 
-"@functionless/ast-reflection@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@functionless/ast-reflection/-/ast-reflection-0.3.0.tgz#f8164cae656fd87e17f86f598e8658c71575799e"
-  integrity sha512-SkW/s73DIeYFcEV/GCW9Z6+wmgIduEsUOLTF40PN1NbKNVWDra7ZZz7+77tFArr+DMF/ObRcEpUpxio4E+lvkQ==
-
 "@functionless/language-service@^0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@functionless/language-service/-/language-service-0.0.4.tgz#fc2e23c8d4fa5766268fe83a65cdd3a385078462"
