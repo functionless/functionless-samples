@@ -29,6 +29,7 @@
     "@swc/jest": "^0.2.22",
     "@types/jest": "^29.0.2",
     "@types/node": "^14",
+    "@types/node-fetch": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "aws-cdk": "^2.39.1",
@@ -51,6 +52,7 @@
     "aws-cdk-lib": "^2.39.1",
     "constructs": "^10.0.5",
     "functionless": "^0.22.20",
+    "node-fetch": "^3.2.10",
     "typesafe-dynamodb": "^0.2.2"
   },
   "license": "Apache-2.0",

@@ -13,6 +13,10 @@
       "type": "build"
     },
     {
+      "name": "@types/node-fetch",
+      "type": "build"
+    },
+    {
       "name": "@types/node",
       "version": "^14",
       "type": "build"
@@ -103,6 +107,10 @@
     },
     {
       "name": "functionless",
+      "type": "runtime"
+    },
+    {
+      "name": "node-fetch",
       "type": "runtime"
     },
     {

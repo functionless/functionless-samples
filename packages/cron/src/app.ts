@@ -1,58 +1,16 @@
-import * as appsync from '@aws-cdk/aws-appsync-alpha';
-import { App, aws_dynamodb, Stack } from 'aws-cdk-lib';
-import { AppsyncResolver, Table } from 'functionless';
+import { App, Duration, Stack } from 'aws-cdk-lib';
+import { Schedule } from 'aws-cdk-lib/aws-events';
+import { EventBus, Function } from 'functionless';
+import fetch from 'node-fetch';
 
 const app = new App();
-const stack = new Stack(app, 'stack');
+const stack = new Stack(app, 'functionlessCron');
 
-interface Person {
-  id: string;
-  name: string;
-}
-
-const table = new Table<Person, 'id'>(stack, 'Table', {
-  partitionKey: {
-    name: 'id',
-    type: aws_dynamodb.AttributeType.STRING,
-  },
+const job = new Function(stack, 'cronJob', async () => {
+  const metaphors = await fetch('http://metaphorpsum.com/sentences/5').then(
+    (x) => x.text(),
+  );
+  console.log(metaphors);
 });
 
-const api = new appsync.GraphqlApi(stack, 'api', {
-  name: 'api',
-});
-
-const Person = api.addType(
-  new appsync.ObjectType('Person', {
-    definition: {
-      name: appsync.GraphqlType.string(),
-    },
-  }),
-);
-
-api.addQuery(
-  'getPerson',
-  new appsync.Field({
-    returnType: Person.attribute(),
-    args: {
-      id: appsync.GraphqlType.string(),
-    },
-  }),
-);
-
-new AppsyncResolver<{ id: string }, Person>(
-  api,
-  'getPerson',
-  {
-    fieldName: 'getPerson',
-    typeName: 'Query',
-  },
-  ($context) => {
-    return table.appsync.getItem({
-      key: {
-        id: {
-          S: $context.arguments.id,
-        },
-      },
-    });
-  },
-);
+EventBus.schedule(stack, 'cron', Schedule.rate(Duration.minutes(1))).pipe(job);
