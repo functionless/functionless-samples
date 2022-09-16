@@ -74,4 +74,14 @@ new FunctionlessProject({
   cdkVersion: "2.39.1",
 });
 
+new FunctionlessProject({
+  parent: turbo,
+  defaultReleaseBranch: "main",
+  name: "cron",
+  outdir: "packages/cron",
+  cdkVersion: "2.39.1",
+  devDeps: ["@types/node-fetch"],
+  deps: ["node-fetch"],
+});
+
 turbo.synth();
