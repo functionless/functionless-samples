@@ -78,6 +78,16 @@ new FunctionlessProject({
 new FunctionlessProject({
   parent: turbo,
   defaultReleaseBranch: "main",
+  name: "cron",
+  outdir: "packages/cron",
+  cdkVersion: "2.39.1",
+  devDeps: ["@types/node-fetch"],
+  deps: ["node-fetch"],
+});
+
+new FunctionlessProject({
+  parent: turbo,
+  defaultReleaseBranch: "main",
   name: "eventBridge",
   outdir: "packages/eventBridge",
   cdkVersion: "2.39.1",
