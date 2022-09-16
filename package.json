@@ -55,8 +55,9 @@
   "types": "lib/index.d.ts",
   "private": true,
   "workspaces": [
-    "packages/eventBridge",
+    "packages/appsync",
     "packages/cron",
+    "packages/eventBridge",
     "packages/sagaFunction",
     "packages/sample1"
   ],

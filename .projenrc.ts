@@ -98,4 +98,18 @@ new FunctionlessProject({
   },
 });
 
+new FunctionlessProject({
+  parent: turbo,
+  defaultReleaseBranch: "main",
+  name: "appsync",
+  outdir: "packages/appsync",
+  cdkVersion: "2.39.1",
+  deps: ["@aws-sdk/util-dynamodb"],
+  tsconfig: {
+    compilerOptions: {
+      skipLibCheck: false,
+    },
+  },
+});
+
 turbo.synth();
