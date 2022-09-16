@@ -31,6 +31,7 @@ const turbo = new TurborepoProject({
       projenCredentials: GithubCredentials.fromApp(),
     },
   },
+  projenCredentials: GithubCredentials.fromApp(),
   gitignore: [".swc"],
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -82,6 +83,19 @@ new FunctionlessProject({
   cdkVersion: "2.39.1",
   devDeps: ["@types/node-fetch"],
   deps: ["node-fetch"],
+});
+
+new FunctionlessProject({
+  parent: turbo,
+  defaultReleaseBranch: "main",
+  name: "eventBridge",
+  outdir: "packages/eventBridge",
+  cdkVersion: "2.39.1",
+  tsconfig: {
+    compilerOptions: {
+      skipLibCheck: false,
+    },
+  },
 });
 
 turbo.synth();
